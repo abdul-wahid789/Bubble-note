@@ -1,7 +1,8 @@
-package com.example.bubblenote
+package com.example.bubblenote.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.bubblenote.R
 
 class NoteViewActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

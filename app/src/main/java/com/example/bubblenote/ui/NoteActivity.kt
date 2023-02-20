@@ -1,9 +1,8 @@
-package com.example.bubblenote
+package com.example.bubblenote.ui
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.bubblenote.databinding.ActivityLoginBinding
 import com.example.bubblenote.databinding.ActivityNoteBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth

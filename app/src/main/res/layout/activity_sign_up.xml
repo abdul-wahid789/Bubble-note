@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:background="@drawable/gradient_bg"
     android:layout_height="match_parent"
-    tools:context=".SignUpActivity">
+    tools:context=".ui.SignUpActivity">
 
     <TextView
         android:id="@+id/text_view_id"
@@ -78,7 +78,7 @@
         <!--        app:startIconDrawable="@drawable/ic_baseline_email_24"-->
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/lasttName"
+            android:id="@+id/lastName"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </com.google.android.material.textfield.TextInputLayout>
