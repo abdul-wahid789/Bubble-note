@@ -5,8 +5,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.activity.viewModels
+import androidx.lifecycle.ViewModel
 import com.example.bubblenote.databinding.ActivityLoginBinding
 import com.example.bubblenote.showToastMessage
+import com.example.bubblenote.viewmodel.LoginVM
+import com.example.bubblenote.viewmodel.SignUpVM
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -14,36 +18,31 @@ import com.google.firebase.ktx.Firebase
 class LoginActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var binding: ActivityLoginBinding
+    val vm: LoginVM by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
         binding.loginBtn.setOnClickListener {
+            binding.loading.visibility = View.VISIBLE
             var email: String = binding.email.text.toString()
             var password: String = binding.password.text.toString()
-            if (email.isNotEmpty() and password.isNotEmpty()) {
-                binding.loading.visibility= View.VISIBLE
-                auth = Firebase.auth
-                auth.signInWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(this) { task ->
-                        if (task.isSuccessful) {
-                            binding.loading.visibility= View.GONE
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d("Login", "signInWithEmail:success")
-                            showToastMessage(this,"Success")
-                            val user = auth.currentUser
-//                        updateUI(user)
-                            intent = Intent(this, NoteActivity::class.java)
-                            startActivity(intent)
-                        } else {
-                            binding.loading.visibility= View.GONE
-                            // If sign in fails, display a message to the user.
-                            Log.w("Login", "signInWithEmail:failure", task.exception)
-                            showToastMessage(this,"Wrong Email or Password")
-                        }
-                    }
-            }
+            vm.loginUser(email, password, {
+                showToastMessage(this, it)
+                intent = Intent(this, NoteActivity::class.java)
+                startActivity(intent)
+                binding.loading.visibility = View.GONE
+
+            }, { e: Any, m: String ->
+                showToastMessage(this, m + ": " + e)
+                binding.loading.visibility = View.GONE
+
+            }, {
+                showToastMessage(this, it)
+                binding.loading.visibility = View.GONE
+
+            })
             binding.signUp.setOnClickListener {
                 intent = Intent(this, SignUpActivity::class.java)
                 startActivity(intent)
