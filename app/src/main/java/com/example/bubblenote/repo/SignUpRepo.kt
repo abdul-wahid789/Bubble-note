@@ -1,13 +1,7 @@
 package com.example.bubblenote.repo
 
-import android.app.Activity
-import android.content.Context
-import android.util.Log
-import android.view.View
-import android.widget.Toast
+
 import com.example.bubblenote.model.UserInfo
-import com.example.bubblenote.showToastMessage
-import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
