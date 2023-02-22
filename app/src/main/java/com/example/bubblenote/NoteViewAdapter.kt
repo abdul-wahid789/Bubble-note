@@ -3,8 +3,6 @@ package com.example.bubblenote
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.bubblenote.databinding.ActivityNoteBinding
-import com.example.bubblenote.databinding.ActivityNoteViewBinding
 import com.example.bubblenote.databinding.ItemContainerBinding
 import com.example.bubblenote.model.Note
 

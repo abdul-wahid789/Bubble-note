@@ -17,11 +17,9 @@ import com.google.firebase.ktx.Firebase
 
 class NoteActivity : AppCompatActivity() {
     private lateinit var binding: ActivityNoteBinding
-    private lateinit var auth: FirebaseAuth
     val vm: NoteVM by viewModels()
     var list: MutableList<Note> = mutableListOf()
     lateinit var adapter: NoteViewAdapter
-    var c: Int = 0
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,38 +30,38 @@ class NoteActivity : AppCompatActivity() {
         vm.userEmail {
             binding.name.text = it
         }
+
         //adding data into list
         var db = Firebase.firestore
         lateinit var email: String
         vm.userEmail {
             email = it
         }
-//        val docRef = db.collection("Note").document(email)
+        val docRef = db.collection("Note").document(email)
         db.collection("Note")
             .whereEqualTo("Email", email)
             .get()
             .addOnSuccessListener { documents ->
                 for (document in documents) {
-//                    list.add(
-//                        Note(
-//                            document.data["Title"].toString(),
-//                            document.data["Content"].toString()
-//                        )
-//                    )
+                    list.add(
+                        Note(
+                            document.data["Title"].toString(),
+                            document.data["Content"].toString()
+                        )
+                    )
                     //Log.d(TAG, "${document.id} => ${document.data}")
                 }
-                showToastMessage(this, c.toString())
+                adapter = NoteViewAdapter(list)
+                binding.recView.adapter = adapter
+                adapter.notifyDataSetChanged()
+
 
             }
             .addOnFailureListener { exception ->
 //                Log.w(TAG, "Error getting documents: ", exception)
                 showToastMessage(this, "ERROR")
             }
-        list.add(Note("hi","fdsfsdf"))
-        list.add(Note("hi2","dasdasd"))
-        adapter = NoteViewAdapter(list)
-        binding.recView.adapter = adapter
-        adapter.notifyDataSetChanged()
+
 
 
 
@@ -77,7 +75,7 @@ class NoteActivity : AppCompatActivity() {
         binding.addNoteBtn.setOnClickListener {
             intent = Intent(this, NoteViewActivity::class.java)
             startActivity(intent)
-            finish()
         }
     }
+
 }
