@@ -1,8 +1,6 @@
 package com.example.bubblenote.repo
 
 import com.example.bubblenote.model.Note
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -23,8 +21,8 @@ class AddNoteRepo {
         classObject["Content"] = note.content
 
 
-        db.collection("Note").document(email)
-            .set(classObject)
+        db.collection("Note")
+            .add(classObject)
             .addOnSuccessListener { documentReference ->
                 s.invoke()
 

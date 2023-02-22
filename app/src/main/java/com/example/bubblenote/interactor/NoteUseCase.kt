@@ -1,5 +1,6 @@
 package com.example.bubblenote.interactor
 
+import com.example.bubblenote.repo.AddNoteRepo
 import com.example.bubblenote.repo.NoteRepo
 
 class NoteUseCase {
